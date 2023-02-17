@@ -3,3 +3,4 @@
 
      The project created is a simple online chatroom used to chat between various users. The chatroom enables the users to generate 
      an username for themselves and keeps track of the chat history from the moment they log in.
+     Thank you :) 
