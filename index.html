@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat Room</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <style>
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <label for="username">Username:</label>
+    <input id="username" type="text" />
+  </div>
+  <ul id="messages"></ul>
+  <form action="">
+    <input id="message" autocomplete="off" /><button>Send</button>
+  </form>
+  <script>
+    const socket = io();
+    const form = document.querySelector('form');
+    const input = document.querySelector('input#message');
+    const messages = document.querySelector('#messages');
+    const usernameInput = document.querySelector('input#username');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const username = usernameInput.value;
+      const message = input.value;
+      socket.emit('chat message', { username, message });
+      input.value = '';
+    });
+
+    socket.on('chat message', (data) => {
+      const li = document.createElement('li');
+      li.innerText = `${data.username}: ${data.message}`;
+      messages.appendChild(li);
+    });
+  </script>
+</body>
+</html>
